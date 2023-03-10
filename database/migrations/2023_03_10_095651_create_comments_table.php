@@ -11,21 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('photos', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('author_id');
-            $table->string('name');
-            $table->json('tags_list')->nullable();
+            $table->bigIncrements('author_id');
+            $table->bigIncrements('photo_id');
+            $table->string('comment_text');
             $table->boolean('reported')->default(0);
             $table->boolean('approved')->default(1);
             $table->dateTime('creation_date')->useCurrent();
-            //$table->timestamps();
-            $table->index('author_id');
+            $table->index(['author_id','photo_id']);
             $table->foreignId('author_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade')
-                ->onUpdate('restrict'); 
+                ->onUpdate('restrict');
+            $table->foreignId('photo_id')
+                ->constrained()
+                ->onDelete('cascade')
+                ->onUpdate('restrict');
+            //$table->timestamps();
         });
     }
 
@@ -34,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('photos');
+        Schema::dropIfExists('comments');
     }
 };
