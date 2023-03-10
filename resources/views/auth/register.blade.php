@@ -1,6 +1,7 @@
 @extends('layouts.page')
 
 @section('scripts')
+    @parent
     <script src="{{ asset('js/register.js') }}"></script>
 @endsection
 

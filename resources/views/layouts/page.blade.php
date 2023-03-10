@@ -4,7 +4,7 @@
         <title>@yield('title')</title>
         @yield('meta')
         @section('links')
-            @vite([ 'resources/sass/app.scss' ])
+            <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         @show
         @section('scripts')
             <script src="{{ asset('js/app.js') }}"></script>
