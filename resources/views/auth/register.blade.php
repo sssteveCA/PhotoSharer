@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.page')
 
 @section('content')
 <div class="container">
@@ -46,8 +46,8 @@
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="1" id="fb_reg_show_pwd" name="show_password">
-                                    <label class="form-check-label" for="fb_reg_show_pwd">Mostra password</label>
+                                    <input class="form-check-input" type="checkbox" value="1" id="ps_reg_show_pwd" name="show_password">
+                                    <label class="form-check-label" for="ps_reg_show_pwd">Mostra password</label>
                                 </div>
                             </div>
                         </div>
