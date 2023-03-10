@@ -13,20 +13,21 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->bigIncrements('author_id');
-            $table->bigIncrements('photo_id');
+            $table->unsignedBigInteger('author_id');
+            $table->unsignedBigInteger('photo_id');
             $table->string('comment_text');
             $table->boolean('reported')->default(0);
             $table->boolean('approved')->default(1);
             $table->dateTime('creation_date')->useCurrent();
             $table->index(['author_id','photo_id']);
-            $table->foreignId('author_id')
+            $table->foreign('author_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('restrict');
-            $table->foreignId('photo_id')
-                ->constrained()
+            $table->foreign('photo_id')
+                ->references('id')
+                ->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('restrict');
             //$table->timestamps();

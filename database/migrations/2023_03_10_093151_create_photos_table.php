@@ -21,7 +21,7 @@ return new class extends Migration
             $table->dateTime('creation_date')->useCurrent();
             //$table->timestamps();
             $table->index('author_id');
-            $table->foreignId('author_id')
+            $table->foreign('author_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade')
