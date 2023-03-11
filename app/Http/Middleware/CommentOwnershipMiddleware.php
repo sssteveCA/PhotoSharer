@@ -42,7 +42,7 @@ class CommentOwnershipMiddleware
             ],404,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
         }catch(UnauthorizedActionException){
             return response()->json([
-                C::KEY_DONE => false, C::KEY_MESSAGE => 'Non disponi dei privilegi per poter eseguire questa azione'
+                C::KEY_DONE => false, C::KEY_MESSAGE => 'Non disponi dei privilegi necessari per poter eseguire questa azione'
             ],401,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
         }catch(Exception $e){
             return response()->json([
