@@ -80,16 +80,21 @@ class PhotoController extends Controller
         try{
             $photo = Photo::find($id);
             if($photo != null){
-                $comments = Comment::where('photo_id',$id)
-                    ->orderBy('creation_date')
-                    ->get()->toArray();
+                $user = User::find($photo->author_id);
+                if($user != null){
+                    $comments = Comment::where('photo_id',$id)
+                        ->orderBy('creation_date')
+                        ->get()->toArray();
                     return view('photos.show',[
                             C::KEY_DONE => true,
                             C::KEY_DATA => [
+                                'comments' => $comments,
                                 'photo' => $photo,
-                                'comments' => $comments
+                                'src' => "/photo_resource/{$user->name}/{$photo->name}"
                             ]
                     ]);
+                }//if($user != null){
+                
             }//if($photo != null){
             throw new ResourceNotFoundException;
         }catch(Exception $e){
