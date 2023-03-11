@@ -35,7 +35,8 @@ class ImageFetchController extends Controller
             session()->put('redirect','1');
             return redirect()->route('fallback');
         }catch(Exception $e){
-
+            session()->put('redirect','1');
+            return redirect()->route('fallback');
         }
         
     }

@@ -1,3 +1,5 @@
 <div class="{{ $attributes['classes'] }}">
-    <img class="thumbnail" src="{{ $attributes['src'] }}" alt="" title="">
+    <a href="#">
+        <img class="thumbnail" src="{{ $attributes['src'] }}" alt="" title="">
+    </a>
 </div>

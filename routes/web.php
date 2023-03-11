@@ -26,10 +26,7 @@ use App\Interfaces\Constants as C;
 */
 
 Route::get('/', [PhotoController::class,'index']);
-
-Route::resource('photos', PhotoController::class)->except([
-    'index'
-]);
+Route::get('photos/{id}',[PhotoController::class,'show']);
 
 Auth::routes();
 

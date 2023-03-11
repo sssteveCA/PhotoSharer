@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ResourceNotFoundException;
 use App\Models\Photo;
 use Exception;
 use Illuminate\Http\Request;
 use App\Interfaces\Constants as C;
+use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 
@@ -30,7 +32,9 @@ class PhotoController extends Controller
                     $image_path = $photo_dir."/{$user->name}/{$photo_query->name}";
                     if(file_exists($image_path)){
                         if(is_file($image_path)){
-                            $photos[] = "/photo_resource/{$user->name}/{$photo_query->name}";
+                            $photos[] = [ 
+                                "src" => "/photo_resource/{$user->name}/{$photo_query->name}"
+                            ];
                         }//if(is_file($image_path)){
                     }//if(file_exists($image_path)){
                     //else $photo_query->delete();
@@ -72,7 +76,25 @@ class PhotoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try{
+            $photo = Photo::find($id);
+            if($photo != null){
+                $comments = Comment::where('photo_id',$id)
+                    ->orderBy('creation_date')
+                    ->get()->toArray();
+                    return view('photos.show',[
+                            C::KEY_DONE => true,
+                            C::KEY_DATA => [
+                                'photo' => $photo,
+                                'comments' => $comments
+                            ]
+                    ]);
+            }//if($photo != null){
+            throw new ResourceNotFoundException;
+        }catch(Exception $e){
+            session()->put('redirect','1');
+            return redirect()->route('fallback');
+        }
     }
 
     /**
