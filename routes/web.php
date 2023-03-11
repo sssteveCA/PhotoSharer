@@ -31,6 +31,12 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['auth','verified'])->group(function(){
     Route::get('/dashboard',[DashboardController::class,'show']);
+    Route::group(['prefix' => 'admin', 'middleware' => ['admin.check']],function(){
+
+    });
+    Route::middleware(['admin.check'])->group(function(){
+
+    });
 });
 
 Route::get('/email/verify', function () {
