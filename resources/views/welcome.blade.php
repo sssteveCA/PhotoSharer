@@ -1,11 +1,11 @@
 @extends('layouts.page')
 
 @section('content')
-    {{-- @php
+    @php
         echo '<pre>';
         var_dump($photos);
         echo '</pre>';
-    @endphp --}}
+    @endphp 
     @if($done == true)
         <div class="container-fluid">
             <div class="row g-3">

@@ -24,7 +24,6 @@ class ImageFetchController extends Controller
                 if($photo != null){
                     $photo_dir = __DIR__."/../../../resources/images";
                     $image_path = $photo_dir."/{$name}/{$file}";
-                    Log::info($image_path);
                     if(file_exists($image_path)){
                         if(is_file($image_path)){
                             return response()->file($image_path);
