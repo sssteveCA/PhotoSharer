@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Log;
 class Authenticate extends Middleware
 {
 
-    public function handle($request, Closure $next, ...$guards)
+    /* public function handle($request, Closure $next, ...$guards)
     {
         echo "Authenticate handle\r\n";
         parent::handle($request,$next,$guards);
-    }
+    } */
 
 
     /**

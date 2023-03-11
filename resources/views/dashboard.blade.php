@@ -1,9 +1,14 @@
 @extends('layouts.page')
 
 @section('content')
-    @php
+    {{-- @php
         echo '<pre>';
         var_dump($data);
         echo '</pre>';
-    @endphp
+    @endphp --}}
+    @if($done == true)
+        @includeWhen($data['role'] == 'admin','partials.dashboard.admin')
+        @includeWhen($data['role'] == 'user','partials.dashboard.user')
+    @else
+    @endif
 @endsection

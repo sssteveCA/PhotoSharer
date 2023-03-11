@@ -30,7 +30,8 @@ class DashboardController extends Controller
                         'user_subscribed' => $user_subscribed, 
                         'comments' => $comments, 
                         'reported_comments' => $reported_comments,
-                        'reported_photos' => $reported_photos
+                        'reported_photos' => $reported_photos,
+                        'role' => $user->role
                     ]
                 ]);
             }
@@ -38,7 +39,8 @@ class DashboardController extends Controller
             return response()->view('dashboard',[
                 C::KEY_DONE => true,
                 C::KEY_DATA => [
-                    'photos' => $photos
+                    'photos' => $photos,
+                    'role' => $user->role
                 ]
             ]);
         }catch(Exception $e){
