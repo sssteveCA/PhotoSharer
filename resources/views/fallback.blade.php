@@ -1,5 +1,5 @@
 @extends('layouts.page')
 
-@section
+@section('content')
     <x-alert.error message={{$message}} />
 @endsection

@@ -34,7 +34,7 @@ Route::resource('photos', PhotoController::class)->except([
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/photo_resource/{$name}',ImageFetchController::class);
+Route::get('/photo_resource/{name}/{file}',ImageFetchController::class);
 
 Route::middleware(['auth','verified'])->group(function(){
     Route::get('/dashboard',[DashboardController::class,'show']);
@@ -76,10 +76,9 @@ Route::get('/fallback', function(){
     else{
         return redirect('/');
     }
-});
+})->name('fallback');
 
 
-//URL that not exists or the user is unauthorized to access
 Route::fallback(function(){
     session()->put('redirect','1');
     return redirect('/fallback');
