@@ -88,6 +88,7 @@ class PhotoController extends Controller
                     return view('photos.show',[
                             C::KEY_DONE => true,
                             C::KEY_DATA => [
+                                'author' => $user->name,
                                 'comments' => $comments,
                                 'photo' => $photo,
                                 'src' => "/photo_resource/{$user->name}/{$photo->name}"
