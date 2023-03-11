@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\CommentAdminController;
 use App\Http\Controllers\admin\PhotoAdminController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ImageFetchController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Auth\Events\Verified;
@@ -11,6 +12,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Interfaces\Constants as C;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +34,7 @@ Route::resource('photos', PhotoController::class)->except([
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/photo_resource/{$name}',ImageFetchController::class);
 
 Route::middleware(['auth','verified'])->group(function(){
     Route::get('/dashboard',[DashboardController::class,'show']);
@@ -62,3 +65,22 @@ Route::post('/email/verification-notification', function (Request $request) {
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::permanentRedirect('/home','/');
+
+Route::get('/fallback', function(){
+    if(session()->has('redirect') && session()->get('redirect') == '1'){
+        session()->forget('redirect');
+        return response()->view('fallback',[
+            C::KEY_MESSAGE => "La risorsa richiesta non esiste oppure non disponi delle autorizzazioni necessarie"
+        ],400);
+    }
+    else{
+        return redirect('/');
+    }
+});
+
+
+//URL that not exists or the user is unauthorized to access
+Route::fallback(function(){
+    session()->put('redirect','1');
+    return redirect('/fallback');
+});
