@@ -1,5 +1,9 @@
 @extends('layouts.page')
 
+@section('scripts')
+    <script src="{{ asset('js/register.js') }}"></script>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

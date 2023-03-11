@@ -7,7 +7,9 @@
             @vite([ 'resources/sass/app.scss' ])
         @show
         @section('scripts')
-            @vite([ 'resources/js/app.js' ])
+            <script src="{{ asset('js/app.js') }}"></script>
+            <script src="{{ asset('js/jquery.js') }}"></script>
+            <script src="{{ asset('js/menu.js') }}"></script>
         @show
     </head>
     <body>
