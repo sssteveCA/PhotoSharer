@@ -6,6 +6,7 @@ use App\Models\Photo;
 use Exception;
 use Illuminate\Http\Request;
 use App\Interfaces\Constants as C;
+use Illuminate\Support\Facades\Log;
 
 class PhotoController extends Controller
 {
@@ -19,7 +20,8 @@ class PhotoController extends Controller
             if($tags && $tags != ""){
                 $tags_array = explode(',',$tags);
             }
-            else $photos = Photo::all()->toArray();
+            else $photos = Photo::where('approved',1)->get()->toArray();
+            Log::debug("PhotoController photos => ".var_export($photos,true)."\r\n");
             return response()->view('welcome',[
                 C::KEY_DONE => true, 'photos' => $photos
             ]);

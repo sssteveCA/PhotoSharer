@@ -99,6 +99,17 @@ return [
             ],
         ],
 
+        'stdout' => [
+            'driver' => 'monolog',
+            'name' => 'PhotoSharer',
+            'level' => env('LOG_LEVEL','debug'),
+            'handler' => StreamHandler::class,
+            'formatter' => env('LOG_STDERR_FORMATTER'),
+            'with' => [
+                'stream' => 'php://stdout'
+            ],
+        ],
+
         'syslog' => [
             'driver' => 'syslog',
             'level' => env('LOG_LEVEL', 'debug'),

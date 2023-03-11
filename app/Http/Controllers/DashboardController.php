@@ -16,7 +16,6 @@ class DashboardController extends Controller
 
     public function show(Request $request){
         try{
-            throw new Exception;
             $user = Auth::user();
             if($user->role == "admin"){
                 $user_subscribed = User::whereNotNull('email_verified_at')->get()->toArray();
