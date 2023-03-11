@@ -9,7 +9,10 @@
                 @if (Route::has('login'))
                     @auth
                         <li class="nav-item">
-                            <a id="logout-item" class="dropdown-item" href="{{ route('logout') }}">
+                            <a href="{{ route('dashboard') }}" class="nav-link">Bacheca</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="logout-item" class="nav-link" href="{{ route('logout') }}">
                                 {{ __('Logout') }}
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

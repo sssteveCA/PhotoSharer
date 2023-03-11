@@ -37,7 +37,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/photo_resource/{name}/{file}',ImageFetchController::class);
 
 Route::middleware(['auth','verified'])->group(function(){
-    Route::get('/dashboard',[DashboardController::class,'show']);
+    Route::get('/dashboard',[DashboardController::class,'show'])->name('dashboard');
     Route::withoutMiddleware([VerifyCsrfToken::class])->group(function(){
         Route::apiResource('comments',CommentController::class)->only(['update','destroy']);
         Route::group(['prefix' => 'admin', 'middleware' => ['admin.check']],function(){
