@@ -22,11 +22,11 @@ class CommentOwnershipMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        Log::info("CommentOwnershipMiddleware handle");
+        echo "CommentOwnershipMiddleware handle\r\n";
         try{
             $user = Auth::user();
-            $comment_id = $request->route()->parameter('id');
-            Log::debug("CommentOwnershipMiddleware comment id => {$comment_id}");
+            $comment_id = $request->route()->parameter('comment');
+            echo "CommentOwnershipMiddleware comment id => {$comment_id}";
             $comment = Comment::find($comment_id);
             if($comment != null){
                 if($user->id == $comment->author_id){

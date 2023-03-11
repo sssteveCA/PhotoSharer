@@ -13,7 +13,7 @@ class Authenticate extends Middleware
 
     public function handle($request, Closure $next, ...$guards)
     {
-        Log::info("Authenticate handle");
+        echo "Authenticate handle\r\n";
         parent::handle($request,$next,$guards);
     }
 
