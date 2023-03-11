@@ -101,11 +101,26 @@ class CommentController extends Controller
     public function destroy(Request $request,string $id)
     {
         try{
-            $comment = $request->input('comment');
-            $comment->delete();
+            $user = Auth::user();
+            $comment = Comment::find($id);
+            if($comment != null){
+                if($user->id == $comment->author_id){
+                    $comment->delete();
+                    return response()->json([
+                        C::KEY_DONE => true, C::KEY_MESSAGE => 'Il commento è stato cancellato'
+                    ],200,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+                }
+                throw new UnauthorizedActionException;
+            }//if($comment != null){
+            throw new ResourceNotFoundException;
+        }catch(ResourceNotFoundException){
             return response()->json([
-                C::KEY_DONE => true, C::KEY_MESSAGE => 'Il commento è stato cancellato'
-            ],200,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+                C::KEY_DONE => false, C::KEY_MESSAGE => 'Il commento richiesto non esiste'
+            ],404,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        }catch(UnauthorizedActionException){
+            return response()->json([
+                C::KEY_DONE => false, C::KEY_MESSAGE => 'Non disponi dei privilegi necessari per poter eseguire questa azione'
+            ],401,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);    
         }catch(Exception $e){
             return response()->json([
                 C::KEY_DONE => false, C::KEY_MESSAGE => 'Errore durante la cancellazione del commento'
