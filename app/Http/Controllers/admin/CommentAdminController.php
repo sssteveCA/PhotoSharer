@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
+use App\Interfaces\Constants as C;
+use App\Models\Comment;
 
 class CommentAdminController extends Controller
 {
@@ -44,6 +47,16 @@ class CommentAdminController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try{
+            $comment = Comment::find($id);
+            $comment->delete();
+            return response()->json([
+                C::KEY_DONE => true, C::KEY_MESSAGE => 'Il commento è stato cancellato'
+            ]);
+        }catch(Exception $e){
+            return response()->json([
+                C::KEY_DONE => false, C::KEY_MESSAGE => 'Errore durante la cancellazione del commento'
+            ],500);
+        }
     }
 }

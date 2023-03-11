@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\admin\CommentAdminController;
+use App\Http\Controllers\admin\PhotoAdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PhotoController;
 use Illuminate\Auth\Events\Verified;
@@ -32,10 +34,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware(['auth','verified'])->group(function(){
     Route::get('/dashboard',[DashboardController::class,'show']);
     Route::group(['prefix' => 'admin', 'middleware' => ['admin.check']],function(){
-
-    });
-    Route::middleware(['admin.check'])->group(function(){
-
+        Route::apiResource('comments',CommentAdminController::class)->only(['update','destroy']);
+        Route::apiResource('photos',PhotoAdminController::class)->only(['update','destroy']);
     });
 });
 
