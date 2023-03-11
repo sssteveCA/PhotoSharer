@@ -61,7 +61,7 @@ class CommentAdminController extends Controller
             ],400,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
         }catch(ResourceNotFoundException){
             return response()->json([
-                C::KEY_DONE => true, C::KEY_MESSAGE => 'Il commento richiesto non esiste'
+                C::KEY_DONE => false, C::KEY_MESSAGE => 'Il commento richiesto non esiste'
             ],404,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
         }catch(Exception $e){
             return response()->json([
@@ -86,7 +86,7 @@ class CommentAdminController extends Controller
             throw new ResourceNotFoundException;
         }catch(ResourceNotFoundException){
             return response()->json([
-                C::KEY_DONE => true, C::KEY_MESSAGE => 'Il commento richiesto non esiste'
+                C::KEY_DONE => false, C::KEY_MESSAGE => 'Il commento richiesto non esiste'
             ],404,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
         }catch(Exception $e){
             return response()->json([
