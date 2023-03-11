@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PhotoController;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +28,10 @@ Route::resource('photos', PhotoController::class)->except([
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::middleware(['auth','verified'])->group(function(){
+    Route::get('/dashboard',[DashboardController::class,'show']);
+});
 
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
