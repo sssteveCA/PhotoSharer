@@ -32,6 +32,7 @@
     "autoload-dev": {
         "files": [
             "app/Exceptions/ResourceNotFoundException.php",
+            "app/Exceptions/UnauthorizedActionException.php",
             "app/Interfaces/Constants.php"
         ],
         "psr-4": {

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Exceptions\ResourceNotFoundException;
+use App\Exceptions\UnauthorizedActionException;
 use App\Models\Comment;
 use Closure;
 use Exception;
@@ -21,20 +22,28 @@ class CommentOwnershipMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        Log::info("CommentOwnershipMiddleware handle");
         try{
             $user = Auth::user();
             $comment_id = $request->route()->parameter('id');
             Log::debug("CommentOwnershipMiddleware comment id => {$comment_id}");
             $comment = Comment::find($comment_id);
             if($comment != null){
-                if($user->id == $comment->author_id)
+                if($user->id == $comment->author_id){
+                    $request->merge(['comment' => $comment]);
                     return $next($request);
+                }
+                throw new UnauthorizedActionException;
             }//if($comment != null){
             throw new ResourceNotFoundException; 
         }catch(ResourceNotFoundException){
             return response()->json([
                 C::KEY_DONE => false, C::KEY_MESSAGE => 'Il commento richiesto non esiste'
             ],404,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        }catch(UnauthorizedActionException){
+            return response()->json([
+                C::KEY_DONE => false, C::KEY_MESSAGE => 'Non disponi dei privilegi per poter eseguire questa azione'
+            ],401,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
         }catch(Exception $e){
             return response()->json([
                 C::KEY_DONE => false, C::KEY_MESSAGE => 'Errore durante la cancellazione del commento'

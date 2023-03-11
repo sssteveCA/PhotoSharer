@@ -5,9 +5,19 @@ namespace App\Http\Middleware;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;
 use App\Interfaces\Constants as C;
+use Closure;
+use Illuminate\Support\Facades\Log;
 
 class Authenticate extends Middleware
 {
+
+    public function handle($request, Closure $next, ...$guards)
+    {
+        Log::info("Authenticate handle");
+        parent::handle($request,$next,$guards);
+    }
+
+
     /**
      * Get the path the user should be redirected to when they are not authenticated.
      */

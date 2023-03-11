@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('comment.ownership',['only' => ['update','destroy']]);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -62,21 +67,14 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request,string $id)
     {
         try{
-            $comment = Comment::find($id);
-            if($comment != null){
-                $comment->delete();
-                return response()->json([
-                    C::KEY_DONE => true, C::KEY_MESSAGE => 'Il commento è stato cancellato'
-                ],200,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
-            }
-            throw new ResourceNotFoundException;
-        }catch(ResourceNotFoundException){
+            $comment = $request->input('comment');
+            $comment->delete();
             return response()->json([
-                C::KEY_DONE => false, C::KEY_MESSAGE => 'Il commento richiesto non esiste'
-            ],404,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+                C::KEY_DONE => true, C::KEY_MESSAGE => 'Il commento è stato cancellato'
+            ],200,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
         }catch(Exception $e){
             return response()->json([
                 C::KEY_DONE => false, C::KEY_MESSAGE => 'Errore durante la cancellazione del commento'
