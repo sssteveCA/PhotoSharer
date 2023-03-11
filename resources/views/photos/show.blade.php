@@ -16,9 +16,7 @@
             <div class="photo-div col-12 col-md-9">
                 <img src="{{$data['src']}}" alt="" title="">
             </div>
-            <div class="col-12-col-md-3">
-
-            </div>
+            <x-components.photo.photo-details-component classes="photo-details-div col-12-col-md-3" />
         </div>
         <div class="row"></div>
     </div>
