@@ -13,4 +13,15 @@
     }
 }
 
+@mixin photo-details-style(){
+    div.photo-details-div{
+        div{
+            div.detail-header{
+                font-weight: bold;
+            }
+        }
+    }
+}
+
 @include show-photo-style();
+@include photo-details-style();
