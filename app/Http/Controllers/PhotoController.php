@@ -17,7 +17,7 @@ class PhotoController extends Controller
         try{
             $tags = $request->query('tags');
             if($tags && $tags != ""){
-
+                $tags_array = explode(',',$tags);
             }
             else $photos = Photo::all()->toArray();
             return response()->view('welcome',[
