@@ -2,7 +2,9 @@
 
 @mixin show-photo-style(){
     div.photo-div{
+        position: relative;
         min-width: 200px;
+        height: 75vh;
         @extend %flex-center;
         img{
             width: 100%;

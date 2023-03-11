@@ -5,5 +5,6 @@
     "/js/login.js": "/js/login.js",
     "/js/register.js": "/js/register.js",
     "/css/app.css": "/css/app.css",
-    "/css/welcome.css": "/css/welcome.css"
+    "/css/welcome.css": "/css/welcome.css",
+    "/css/photos/show.css": "/css/photos/show.css"
 }
