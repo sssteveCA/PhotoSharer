@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Exceptions\ResourceNotFoundException;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
@@ -49,14 +50,21 @@ class CommentAdminController extends Controller
     {
         try{
             $comment = Comment::find($id);
-            $comment->delete();
+            if($comment != null){
+                $comment->delete();
+                return response()->json([
+                    C::KEY_DONE => true, C::KEY_MESSAGE => 'Il commento è stato cancellato'
+                ],200,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+            }
+            throw new ResourceNotFoundException;
+        }catch(ResourceNotFoundException){
             return response()->json([
-                C::KEY_DONE => true, C::KEY_MESSAGE => 'Il commento è stato cancellato'
-            ]);
+                C::KEY_DONE => true, C::KEY_MESSAGE => 'Il commento richiesto non esiste'
+            ],404,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
         }catch(Exception $e){
             return response()->json([
                 C::KEY_DONE => false, C::KEY_MESSAGE => 'Errore durante la cancellazione del commento'
-            ],500);
+            ],500,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
         }
     }
 }

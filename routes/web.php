@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\CommentAdminController;
 use App\Http\Controllers\admin\PhotoAdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -34,8 +35,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware(['auth','verified'])->group(function(){
     Route::get('/dashboard',[DashboardController::class,'show']);
     Route::group(['prefix' => 'admin', 'middleware' => ['admin.check']],function(){
-        Route::apiResource('comments',CommentAdminController::class)->only(['update','destroy']);
-        Route::apiResource('photos',PhotoAdminController::class)->only(['update','destroy']);
+        Route::withoutMiddleware([VerifyCsrfToken::class])->group(function(){
+            Route::apiResource('comments',CommentAdminController::class)->only(['update','destroy']);
+            Route::apiResource('photos',PhotoAdminController::class)->only(['update','destroy']);
+        });
     });
 });
 
