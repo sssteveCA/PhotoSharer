@@ -33,6 +33,7 @@ class PhotoController extends Controller
                     if(file_exists($image_path)){
                         if(is_file($image_path)){
                             $photos[] = [ 
+                                "id" => $photo_query->id,
                                 "src" => "/photo_resource/{$user->name}/{$photo_query->name}"
                             ];
                         }//if(is_file($image_path)){
