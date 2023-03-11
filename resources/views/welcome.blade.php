@@ -1,15 +1,16 @@
 @extends('layouts.page')
 
 @section('content')
-    @php
+    {{-- @php
         echo '<pre>';
-        var_dump($photos);
+        var_dump($data);
         echo '</pre>';
-    @endphp 
+    @endphp --}}
     @if($done == true)
         <div class="container-fluid">
             <div class="row g-3">
-                @foreach($photos as $photo)
+                @foreach($data['photos'] as $photo)
+                <x-thumbnail-image classes="col-12 col-sm-6 col-md-4 col-lg-3" src="{{$photo}}"/>
                 @endforeach
             </div>
         </div>

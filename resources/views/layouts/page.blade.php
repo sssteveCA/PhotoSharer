@@ -13,7 +13,7 @@
         @show
     </head>
     <body>
-        @include('partials.menu',[])
+        @include('partials.menu')
         <div class="content my-5">
             @yield('content')
         </div>

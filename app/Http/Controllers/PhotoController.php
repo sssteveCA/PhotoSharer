@@ -17,26 +17,30 @@ class PhotoController extends Controller
     public function index(Request $request)
     {
         try{
+            $photos = [];
+            $photo_dir = __DIR__."/../../../resources/images";
             $tags = $request->query('tags');
             if($tags && $tags != ""){
                 $tags_array = explode(',',$tags);
             }
             else $photos_query = Photo::where('approved',1)->get();
-            $photos = [];
-            $photo_dir = __DIR__."/../../../resources/images";
             foreach($photos_query as $photo_query){
                 $user = User::firstWhere('id',$photo_query->author_id);
                 if($user != null){
                     $image_path = $photo_dir."/{$user->name}/{$photo_query->name}";
-                    if(file_exists($image_path) && is_file($image_path)){
-                        $photos[] = [
-                            'user' => $user->name, 'file' => $photo_query->name
-                        ];
-                    }//if(file_exists($image_path) && is_file($image_path)){
+                    if(file_exists($image_path)){
+                        if(is_file($image_path)){
+                            $photos[] = "/photo_resource/{$user->name}/{$photo_query->name}";
+                        }//if(is_file($image_path)){
+                    }//if(file_exists($image_path)){
+                    //else $photo_query->delete();
                 }//if($user != null){
             }//foreach($photos_query as $photo_query){
             return response()->view('welcome',[
-                C::KEY_DONE => true, 'photos' => $photos
+                C::KEY_DONE => true,
+                C::KEY_DATA => [
+                    'photos' => $photos
+                ]
             ]);
         }catch(Exception $e){
             Log::error("PhotoController Exception => ".$e->getMessage());
