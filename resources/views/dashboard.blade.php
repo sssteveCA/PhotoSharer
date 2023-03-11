@@ -3,7 +3,7 @@
 @section('content')
     @php
         echo '<pre>';
-        var_dump($user);
+        var_dump($data);
         echo '</pre>';
     @endphp
 @endsection
