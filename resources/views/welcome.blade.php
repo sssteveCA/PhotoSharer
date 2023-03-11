@@ -1,5 +1,10 @@
 @extends('layouts.page')
 
+@section('links')
+    @parent
+    <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
+@endsection
+
 @section('content')
     {{-- @php
         echo '<pre>';
@@ -8,9 +13,9 @@
     @endphp --}}
     @if($done == true)
         <div class="container-fluid">
-            <div class="row g-3">
+            <div class="row gy-5 gx-0 gx-3">
                 @foreach($data['photos'] as $photo)
-                <x-thumbnail-image classes="col-12 col-sm-6 col-md-4 col-lg-3" src="{{$photo}}"/>
+                <x-thumbnail-image classes="thumbnail-div col-12 col-sm-6 col-md-4 col-lg-3" :src="$photo"/>
                 @endforeach
             </div>
         </div>

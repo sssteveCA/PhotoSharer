@@ -4,5 +4,6 @@
     "/js/menu.js": "/js/menu.js",
     "/js/login.js": "/js/login.js",
     "/js/register.js": "/js/register.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/css/welcome.css": "/css/welcome.css"
 }
