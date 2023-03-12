@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Interfaces\Constants as C;
 use App\Models\Comment;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Log;
 
 class PhotoController extends Controller
@@ -20,27 +21,13 @@ class PhotoController extends Controller
     {
         try{
             $photos = [];
-            $photo_dir = __DIR__."/../../../resources/images";
+            $tags_array = [];
             $tags = $request->query('tags');
             if($tags && $tags != ""){
                 $tags_array = explode(',',$tags);
             }
-            else $photos_query = Photo::where('approved',1)->get();
-            foreach($photos_query as $photo_query){
-                $user = User::firstWhere('id',$photo_query->author_id);
-                if($user != null){
-                    $image_path = $photo_dir."/{$user->name}/{$photo_query->name}";
-                    if(file_exists($image_path)){
-                        if(is_file($image_path)){
-                            $photos[] = [ 
-                                "id" => $photo_query->id,
-                                "src" => "/photo_resource/{$user->name}/{$photo_query->name}"
-                            ];
-                        }//if(is_file($image_path)){
-                    }//if(file_exists($image_path)){
-                    //else $photo_query->delete();
-                }//if($user != null){
-            }//foreach($photos_query as $photo_query){
+            $photos_query = Photo::where('approved',1)->get();
+            $photos = $this->setPhotosArray($photos_query);
             return response()->view('welcome',[
                 C::KEY_DONE => true,
                 C::KEY_DATA => [
@@ -53,7 +40,6 @@ class PhotoController extends Controller
                 C::KEY_DONE => false, C::KEY_MESSAGE => 'Errore durante il caricamento delle immagini'
             ],500);
         }
-        
     }
 
     /**
@@ -139,4 +125,26 @@ class PhotoController extends Controller
             }  
         }
     }
+
+    private function setPhotosArray(Collection $photos_query): array{
+        $photos = [];
+        $photo_dir = __DIR__."/../../../resources/images";
+        foreach($photos_query as $photo_query){
+            $user = User::firstWhere('id',$photo_query->author_id);
+            if($user != null){
+                $image_path = $photo_dir."/{$user->name}/{$photo_query->name}";
+                if(file_exists($image_path)){
+                    if(is_file($image_path)){
+                        $photos[] = [ 
+                            "id" => $photo_query->id,
+                            "src" => "/photo_resource/{$user->name}/{$photo_query->name}"
+                        ];
+                    }//if(is_file($image_path)){
+                }//if(file_exists($image_path)){
+                //else $photo_query->delete();
+            }//if($user != null){
+        }//foreach($photos_query as $photo_query){
+        return $photos;
+    }
+
 }
