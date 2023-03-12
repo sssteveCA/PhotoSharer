@@ -37,6 +37,7 @@ Route::middleware(['auth','verified'])->group(function(){
     Route::get('/dashboard',[DashboardController::class,'show'])->name('dashboard');
     Route::withoutMiddleware([VerifyCsrfToken::class])->group(function(){
         Route::apiResource('comments',CommentController::class)->only(['update','destroy'])->middleware('can.user.comment.manage');
+        Route::apiResource('photos',PhotoController::class)->only(['update','destroy'])->middleware('can.user.comment.manage');
         Route::group(['prefix' => 'admin', 'middleware' => ['admin.check']],function(){
             Route::apiResource('comments',CommentAdminController::class)->only(['update','destroy']);
             Route::apiResource('photos',PhotoAdminController::class)->only(['update','destroy']);
