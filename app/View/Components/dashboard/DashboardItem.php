@@ -88,6 +88,7 @@ HTML;
                 if(!$this->empty){
                     $this->viewData = array_map(function($tag){
                         return <<<HTML
+<a href="/?tags={$tag}">{$tag}</a>
 HTML;
                     },$this->data);
                 }
