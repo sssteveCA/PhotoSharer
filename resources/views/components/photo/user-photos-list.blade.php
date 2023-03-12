@@ -1,4 +1,4 @@
-<table class="table table-striped table-responsive">
+<table class="table table-striped table-responsive user-photos">
     <thead>
         <th scope="col">MINIATURA</th>
         <th scope="col">NOME</th>

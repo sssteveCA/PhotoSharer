@@ -1,0 +1,17 @@
+
+@mixin user-photos-style(){
+    table.user-photos{
+
+        thead th{
+            text-align: center;
+            vertical-align: middle;
+        }
+        tbody{
+            td{
+                vertical-align: middle;
+            }
+        }
+    }
+}
+
+@include user-photos-style();
