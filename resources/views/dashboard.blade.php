@@ -10,6 +10,6 @@
         @includeWhen($data['role'] == 'admin','partials.dashboard.admin')
         @includeWhen($data['role'] == 'user','partials.dashboard.user')
     @else
-        <x-alert.error message={{$message}} />
+        <x-alert.message classes="alert alert-danger" :message="$message" />
     @endif
 @endsection

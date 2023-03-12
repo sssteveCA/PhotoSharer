@@ -23,12 +23,14 @@ class DashboardController extends Controller
                 $photos = Photo::all()->toArray();
                 $reported_photos = $this->filterReportedItems($photos);
                 $comments = Comment::all()->toArray();
+                $this->addCommentData($comments);
                 $reported_comments = $this->filterReportedItems($comments);
                 return response()->view('dashboard',[
                     C::KEY_DONE => true,
                     C::KEY_DATA => [
                         'users_subscribed' => $user_subscribed, 
-                        'comments' => $comments, 
+                        'comments' => $comments,
+                        'photos' => $photos,
                         'reported_comments' => $reported_comments,
                         'reported_photos' => $reported_photos,
                         'role' => $user->role
@@ -48,6 +50,17 @@ class DashboardController extends Controller
                 C::KEY_DONE => false, 
                 C::KEY_MESSAGE => "Si è verificato un errore durante il caricamento del pannello di amministrazione"
             ],500);
+        }
+    }
+
+    private function addCommentData(array &$comments){
+        foreach($comments as $n => $comment){
+            $comment_author = User::find($comment['author_id']);
+            $parent_photo = Photo::find($comment['photo_id']);
+            if($comment_author != null){
+                $comments[$n]['author_name'] = $comment_author->name;
+                $comments[$n]['photo_name'] = $parent_photo->name;
+            }  
         }
     }
 
