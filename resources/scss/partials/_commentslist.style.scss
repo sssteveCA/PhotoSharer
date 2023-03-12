@@ -1,0 +1,20 @@
+
+@mixin comments-list-style(){
+    div.comments-list-container{
+        >.row{
+            background-color: rgba(102, 153, 255,0.2);
+            border-radius: 20px;
+            margin: 0px 10px;
+            >div{
+                margin: 10px 0px;
+            }
+            .author-name{
+                text-transform: uppercase;
+                font-size: 1.2em;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+@include comments-list-style();

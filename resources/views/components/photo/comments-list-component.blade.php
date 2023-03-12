@@ -1,4 +1,4 @@
-<div class="comment-list-container container">
+<div class="comments-list-container container">
     @foreach($comments as $comment)
     <div class="row align-items-center my-3">
         <div class="col-11">
