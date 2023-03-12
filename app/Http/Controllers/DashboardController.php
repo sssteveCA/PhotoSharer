@@ -8,6 +8,7 @@ use App\Interfaces\Constants as C;
 use App\Models\Comment;
 use App\Models\Photo;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -34,7 +35,7 @@ class DashboardController extends Controller
                         'reported_comments' => $reported_comments,
                         'reported_photos' => $reported_photos,
                         'role' => $user->role,
-                        'tags' => []
+                        'tags' => $this->getPhotoTags($photos)
                     ]
                 ]);
             }//if($user->role == "admin"){
@@ -74,6 +75,20 @@ class DashboardController extends Controller
         });
         Log::debug("DashboardController filterReportedItem => ".var_export($reported_items,true));
         return $reported_items;
+    }
+
+    private function getPhotoTags(array $photos): array{
+        $tags = [];
+        foreach($photos as $photo){
+            $photo_tags = json_decode($photo['tags_list'],true);
+            $tags = array_merge($tags,$photo_tags);
+        }
+        $tags = array_unique($tags);
+        uasort($tags, function($str1,$str2){
+            return strcmp($str1,$str2);
+        });
+        Log::info("DashboardController getPhotoTags => ".var_export($tags,true)."\r\n");
+        return $tags;
     }
 
     private function photoTagsJsonDecode(array &$photos){
