@@ -138,7 +138,17 @@ class PhotoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try{
+            $photo = Photo::find($id);
+            $photo->delete();
+            return response()->json([
+                C::KEY_DONE => true, C::KEY_MESSAGE => 'La foto è stata cancellata'
+            ],200,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        }catch(Exception $e){
+            return response()->json([
+                C::KEY_DONE => false, C::KEY_MESSAGE => 'Errore durante la cancellazione della foto'
+            ],500,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        }
     }
 
     private function addCommentAuthorName(array &$comments){
