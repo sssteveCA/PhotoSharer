@@ -1,0 +1,16 @@
+
+@mixin comments-boxes-style(){
+    div.comments-guest, div.comments-auth{
+        background-color: rgb(204, 255, 204);
+    }
+    div.comments-auth{
+        >div{
+            margin: 10px 0px;
+            textarea{
+                resize: vertical;
+            }
+        }
+    }
+}
+
+@include comments-boxes-style();

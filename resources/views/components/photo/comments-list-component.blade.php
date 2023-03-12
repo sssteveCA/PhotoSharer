@@ -11,3 +11,8 @@
     </div>
     @endforeach
 </div>
+@auth
+@endauth
+@guest
+<x-comments-guest />
+@endguest
