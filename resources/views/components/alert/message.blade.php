@@ -1,4 +1,4 @@
 
-<div class="{{ $attributes['classes'] }}" role="alert">
+<div class="{{ $attributes['classes'] }} text-center" role="alert">
   {{ $attributes['message'] }}
 </div>

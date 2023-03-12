@@ -83,7 +83,6 @@ class PhotoController extends Controller
                             ]
                     ]);
                 }//if($user != null){
-                
             }//if($photo != null){
             throw new ResourceNotFoundException;
         }catch(Exception $e){
@@ -143,7 +142,7 @@ class PhotoController extends Controller
                         }//if(empty($tags)){
                         else{
                             $photo_tags = json_decode($photo_query->tags_list,true);
-                            if(!empty(array_intersect($tags,$photo_tags))){
+                            if(empty(array_diff($tags,$photo_tags))){
                                 $photos[] = [ 
                                     "id" => $photo_query->id,
                                     "src" => "/photo_resource/{$user->name}/{$photo_query->name}"
