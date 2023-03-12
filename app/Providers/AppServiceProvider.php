@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\View\Components\photo\CommentsListComponent;
 use App\View\Components\photo\PhotoDetailsComponent;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -22,5 +23,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Blade::component('components.photo.photo-details-component',PhotoDetailsComponent::class);
+        Blade::component('components.photo.comments-list-component',CommentsListComponent::class);
     }
 }
