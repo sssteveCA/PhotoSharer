@@ -34,7 +34,7 @@ class DashboardController extends Controller
                         'role' => $user->role
                     ]
                 ]);
-            }
+            }//if($user->role == "admin"){
             $photos = Photo::where('author_id',$user->id)->get()->toArray();
             return response()->view('dashboard',[
                 C::KEY_DONE => true,

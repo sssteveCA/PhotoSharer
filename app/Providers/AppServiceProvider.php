@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\View\Components\dashboard\DashboardItem;
 use App\View\Components\photo\CommentsListComponent;
 use App\View\Components\photo\PhotoDetailsComponent;
 use Illuminate\Support\Facades\Blade;
@@ -22,7 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Blade::component('components.photo.photo-details-component',PhotoDetailsComponent::class);
         Blade::component('components.photo.comments-list-component',CommentsListComponent::class);
+        Blade::component('components.dashboard.dashboard-item',DashboardItem::class);
+        Blade::component('components.photo.photo-details-component',PhotoDetailsComponent::class);
     }
 }
