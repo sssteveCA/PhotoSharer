@@ -4,6 +4,7 @@ namespace App\View\Components\dashboard;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\Component;
 
 class DashboardItem extends Component
@@ -11,13 +12,14 @@ class DashboardItem extends Component
 
     public array $viewData = [];
     public bool $empty = true;
-    public string $message;
+    public string $message = "";
 
     /**
      * Create a new component instance.
      */
     public function __construct(public array $data, public string $listname, public string $title)
     {
+        Log::debug("DashboardItem construct data => ".var_export($data,true)."\r\n");
         $this->setData();
     }
 
@@ -27,7 +29,7 @@ class DashboardItem extends Component
             case 'users_subscribed':
                 if(!$this->empty){
                     $this->viewData = array_map(function($user_subscribed){
-                        return $user_subscribed->name;
+                        return $user_subscribed['name'];
                     },$this->data);
                 }
                 else{

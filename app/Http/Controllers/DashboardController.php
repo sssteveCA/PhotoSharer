@@ -33,7 +33,8 @@ class DashboardController extends Controller
                         'photos' => $photos,
                         'reported_comments' => $reported_comments,
                         'reported_photos' => $reported_photos,
-                        'role' => $user->role
+                        'role' => $user->role,
+                        'tags' => []
                     ]
                 ]);
             }//if($user->role == "admin"){
@@ -46,6 +47,7 @@ class DashboardController extends Controller
                 ]
             ]);
         }catch(Exception $e){
+            Log::error("DashboardController Exception => ".$e->getMessage());
             return response()->view('dashboard',[
                 C::KEY_DONE => false, 
                 C::KEY_MESSAGE => "Si è verificato un errore durante il caricamento del pannello di amministrazione"
@@ -66,9 +68,9 @@ class DashboardController extends Controller
 
     private function filterReportedItems(array $items): array{
         $reported_items = array_filter($items, function($item){
-            return ($item->reported == 1 && $item->approved == 1);
+            return ($item['reported'] == 1 && $item['approved'] == 1);
         });
-        Log::debug("DashboardController filterReportedPhotos => ".var_export($reported_items,true));
+        Log::debug("DashboardController filterReportedItem => ".var_export($reported_items,true));
         return $reported_items;
     }
 }
