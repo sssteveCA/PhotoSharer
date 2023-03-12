@@ -1,0 +1,25 @@
+@import "extend.rules";
+
+@mixin user-photos-style(){
+    table.user-photos{
+
+        thead th{
+            @extend %table-cells-center;
+        }
+        tbody{
+            td{
+                @extend %table-cells-center;
+                &.td-image{
+                    height: 100px;
+                    width: 100px;
+                    img{
+                        height: 100%;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@include user-photos-style();

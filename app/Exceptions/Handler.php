@@ -3,7 +3,9 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use MongoDB\Driver\Exception\AuthenticationException;
 use Throwable;
+use App\Interfaces\Constants as C;
 
 class Handler extends ExceptionHandler
 {

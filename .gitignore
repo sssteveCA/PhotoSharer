@@ -20,3 +20,4 @@ yarn-error.log
 /node_modules
 /public/css
 /public/js
+/resources/images

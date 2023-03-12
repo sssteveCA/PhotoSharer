@@ -1,0 +1,29 @@
+@import "../partials/commentsboxes.style";
+@import "../partials/commentslist.style";
+@import "../partials/extend.rules";
+
+@mixin show-photo-style(){
+    div.photo-div{
+        position: relative;
+        min-width: 200px;
+        height: 75vh;
+        @extend %flex-center;
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+@mixin photo-details-style(){
+    div.photo-details-div{
+        div{
+            div.detail-header{
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+@include show-photo-style();
+@include photo-details-style();
