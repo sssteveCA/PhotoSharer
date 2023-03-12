@@ -43,7 +43,8 @@ class DashboardController extends Controller
                 C::KEY_DONE => true,
                 C::KEY_DATA => [
                     'photos' => $photos,
-                    'role' => $user->role
+                    'role' => $user->role,
+                    'username' => $user->name
                 ]
             ]);
         }catch(Exception $e){

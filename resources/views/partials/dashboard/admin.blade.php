@@ -1,4 +1,7 @@
 <div class="dashboard-admin container-fluid">
+    <div class="row py-3">
+        <h1 class="text-center">Pannello amministrazione</h1>
+    </div>
     <div class="row gy-2 gx-0 gx-md-2">
         <x-components.dashboard.dashboard-item classes="col-12 col-md-6" :data="$users_subscribed" listname="users_subscribed" title="Utenti registrati" />
         <x-components.dashboard.dashboard-item classes="col-12 col-md-6" :data="$comments" listname="comments" title="Tutti i commenti" />
