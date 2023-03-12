@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Interfaces\Constants as C;
 use App\Models\Comment;
 use App\Models\User;
+use Dotenv\Exception\ValidationException;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -106,7 +107,30 @@ class PhotoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try{
+            $request->validate([
+                'name' => ['required'],
+                'tags_list' => ['required','json']
+            ]);
+            $photo = Photo::find($id);
+            $photo_name = $request->input('name');
+            $photo_tags_list = $request->input('tags_list');
+            $photo->name = $photo_name;
+            $photo->tags_list = $photo_tags_list;
+            $photo->save();
+            return response()->json([
+                C::KEY_DONE => true, C::KEY_MESSAGE => "Le informazioni sulla foto sono state aggiornate"
+            ],200,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        }catch(ValidationException){
+            return response()->json([
+                C::KEY_DONE => true, C::KEY_MESSAGE => 'Inserisci i dati richiesti per modificare la foto'
+            ],400,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        }catch(Exception $e){
+            echo $e->getMessage();
+            return response()->json([
+                C::KEY_DONE => false, C::KEY_MESSAGE => 'Errore durante la modifica della foto'
+            ],500,[],JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        }
     }
 
     /**
