@@ -40,7 +40,7 @@ class DashboardItem extends Component
                 if(!$this->empty){
                     $this->viewData = array_map(function($comment){
                         return <<<HTML
-L'utente {$comment['author_name']} ha commentato "{$comment['comment_text']}" la foto <a href="/photos/{$comment['photo_id']}">
+L'utente {$comment['author_name']} ha commentato "{$comment['comment_text']}" la foto <a href="/photos/{$comment['photo_id']}">{$comment['photo_name']}</a>
 HTML;
                     },$this->data);
                 }
