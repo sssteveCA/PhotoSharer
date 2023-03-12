@@ -12,7 +12,8 @@
     @endforeach
 </div>
 @auth
+<x-photo.comments-auth />
 @endauth
 @guest
-<x-comments-guest />
+<x-photo.comments-guest />
 @endguest

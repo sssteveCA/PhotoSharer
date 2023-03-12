@@ -1,10 +1,10 @@
+@import "extend.rules";
 
 @mixin comments-list-style(){
     div.comments-list-container{
         >.row{
-            background-color: rgba(102, 153, 255,0.2);
-            border-radius: 20px;
-            margin: 0px 10px;
+            background-color: rgba(102, 153, 255,0.6);
+            @extend %comments-box;
             >div{
                 margin: 10px 0px;
             }

@@ -1,11 +1,15 @@
+@import "extend.rules";
 
 @mixin comments-boxes-style(){
     div.comments-guest, div.comments-auth{
         background-color: rgb(204, 255, 204);
+        margin: 10px 0px;
+        @extend %comments-box;
+        
     }
     div.comments-auth{
         >div{
-            margin: 10px 0px;
+            margin: 10px 10px;
             textarea{
                 resize: vertical;
             }
