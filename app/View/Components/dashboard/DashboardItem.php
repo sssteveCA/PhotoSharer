@@ -19,7 +19,7 @@ class DashboardItem extends Component
      */
     public function __construct(public array $data, public string $listname, public string $title)
     {
-        Log::debug("DashboardItem construct data => ".var_export($data,true)."\r\n");
+        Log::debug("DashboardItem construct data => ".var_export($this->data,true)."\r\n");
         $this->setData();
     }
 
