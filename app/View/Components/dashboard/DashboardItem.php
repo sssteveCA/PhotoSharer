@@ -9,12 +9,23 @@ use Illuminate\View\Component;
 class DashboardItem extends Component
 {
 
+    public array $viewData = [];
+    public bool $empty = true;
+    public string $message;
+
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $listname, public array $data)
+    public function __construct(public array $data, public string $listname, public string $title)
     {
         //
+    }
+
+    public function setData(){
+        switch($this->listname){
+            case 'users_subscribed':
+                break;
+        }
     }
 
     /**

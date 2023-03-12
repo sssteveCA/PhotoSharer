@@ -9,6 +9,7 @@ use App\Models\Comment;
 use App\Models\Photo;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
 {
@@ -19,15 +20,14 @@ class DashboardController extends Controller
             $user = Auth::user();
             if($user->role == "admin"){
                 $user_subscribed = User::whereNotNull('email_verified_at')->get()->toArray();
-                $comments = Comment::all();
-                $reported_comments = Comment::where('reported',1)
-                    ->where('approved',1)->get()->toArray();
-                $reported_photos = Photo::where('reported',1)
-                    ->where('approved',1)->get()->toArray();
+                $photos = Photo::all()->toArray();
+                $reported_photos = $this->filterReportedItems($photos);
+                $comments = Comment::all()->toArray();
+                $reported_comments = $this->filterReportedItems($comments);
                 return response()->view('dashboard',[
                     C::KEY_DONE => true,
                     C::KEY_DATA => [
-                        'user_subscribed' => $user_subscribed, 
+                        'users_subscribed' => $user_subscribed, 
                         'comments' => $comments, 
                         'reported_comments' => $reported_comments,
                         'reported_photos' => $reported_photos,
@@ -49,5 +49,13 @@ class DashboardController extends Controller
                 C::KEY_MESSAGE => "Si è verificato un errore durante il caricamento del pannello di amministrazione"
             ],500);
         }
+    }
+
+    private function filterReportedItems(array $items): array{
+        $reported_items = array_filter($items, function($item){
+            return ($item->reported == 1 && $item->approved == 1);
+        });
+        Log::debug("DashboardController filterReportedPhotos => ".var_export($reported_items,true));
+        return $reported_items;
     }
 }

@@ -1,3 +1,6 @@
-<div>
-    <!-- People find pleasure in different ways. I find it in keeping my mind clear. - Marcus Aurelius -->
+<div class="{{$attributes['classes']}}">
+    <div class="bg-dark bg-gradient py-3 text-center">{{$title}}</div>
+    <div class="item-data">
+        
+    </div>
 </div>
