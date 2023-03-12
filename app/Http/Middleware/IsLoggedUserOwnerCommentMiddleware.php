@@ -22,8 +22,10 @@ class IsLoggedUserOwnerCommentMiddleware
         $comment_id = $request->route('comment');
         $comment = Comment::find($comment_id);
         if($comment != null){
-            if($user->id == $comment->author_id)
+            if($user->id == $comment->author_id){
+                $request->request->add(['comment',$comment]);
                 return $next($request);
+            }
             return response()->json([
                 C::KEY_DONE => false,
                 C::KEY_MESSAGE =>"Non disponi dei privilegi necessari per eseguire quest'azione"
