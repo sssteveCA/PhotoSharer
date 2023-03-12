@@ -39,6 +39,7 @@ class DashboardController extends Controller
                 ]);
             }//if($user->role == "admin"){
             $photos = Photo::where('author_id',$user->id)->get()->toArray();
+            $this->photoTagsJsonDecode($photos);
             return response()->view('dashboard',[
                 C::KEY_DONE => true,
                 C::KEY_DATA => [
@@ -73,5 +74,12 @@ class DashboardController extends Controller
         });
         Log::debug("DashboardController filterReportedItem => ".var_export($reported_items,true));
         return $reported_items;
+    }
+
+    private function photoTagsJsonDecode(array &$photos){
+        foreach($photos as $n => $photo){
+            $decoded_tags = json_decode($photo['tags_list'],true);
+            $photos[$n]['tags_list'] = $decoded_tags;
+        }
     }
 }
