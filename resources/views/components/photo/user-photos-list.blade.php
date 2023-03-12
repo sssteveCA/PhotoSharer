@@ -11,16 +11,20 @@
         @foreach($photos as $photo)
         <tr>
             <td>
-                <img src="{{ /resources_photo/$username/$photo['name'] }}" alt="{{$photo['name']}}" title="{{$photo['title']}}">
+                <img src="{{ '/photo_resource/'.$username.'/'.$photo['name'] }}" alt="{{$photo['name']}}" title="{{$photo['name']}}">
             </td>
             <td>
-                <a href="{{ /photos/$photo['id'] }}">{{$photo['name']}}</a>
+                <a href="{{ '/photos/'.$photo['id'] }}">{{$photo['name']}}</a>
             </td>
             <td>
                 {{$photo['creation_date']}}
             </td>
             <td>
-                @forelse($photo['tags'] as $tag)
+                @forelse($photo['tags_list'] as $tag)
+                    {{$tag}}
+                    @if(!$loop->last)
+                    ,
+                    @endif
                 @empty
                 Nessun tag
                 @endforelse

@@ -19,6 +19,7 @@
         @endisset
         @isset($data['username'])
             @includeWhen($data['role'] == 'user','partials.dashboard.user',[
+                'photos' => $data['photos'],
                 'username' => $data['username']
             ])
         @endisset
