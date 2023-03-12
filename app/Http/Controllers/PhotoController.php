@@ -27,7 +27,8 @@ class PhotoController extends Controller
                 $tags_array = explode(',',$tags);
             }
             $photos_query = Photo::where('approved',1)->get();
-            $photos = $this->setPhotosArray($photos_query);
+            Log::debug("PhotoController index => ".var_export($tags_array,true));
+            $photos = $this->setPhotosArray($photos_query,$tags_array);
             return response()->view('welcome',[
                 C::KEY_DONE => true,
                 C::KEY_DATA => [
@@ -72,7 +73,6 @@ class PhotoController extends Controller
                         ->orderBy('creation_date')
                         ->get()->toArray();
                     $this->addCommentAuthorName($comments);
-                    Log::debug("PhotoController show => ".var_export($comments,true)."\r\n");
                     return view('photos.show',[
                             C::KEY_DONE => true,
                             C::KEY_DATA => [
@@ -126,7 +126,7 @@ class PhotoController extends Controller
         }
     }
 
-    private function setPhotosArray(Collection $photos_query): array{
+    private function setPhotosArray(Collection $photos_query, array $tags = []): array{
         $photos = [];
         $photo_dir = __DIR__."/../../../resources/images";
         foreach($photos_query as $photo_query){
@@ -135,10 +135,21 @@ class PhotoController extends Controller
                 $image_path = $photo_dir."/{$user->name}/{$photo_query->name}";
                 if(file_exists($image_path)){
                     if(is_file($image_path)){
-                        $photos[] = [ 
-                            "id" => $photo_query->id,
-                            "src" => "/photo_resource/{$user->name}/{$photo_query->name}"
-                        ];
+                        if(empty($tags)){
+                            $photos[] = [ 
+                                "id" => $photo_query->id,
+                                "src" => "/photo_resource/{$user->name}/{$photo_query->name}"
+                            ];
+                        }//if(empty($tags)){
+                        else{
+                            $photo_tags = json_decode($photo_query->tags_list,true);
+                            if(!empty(array_intersect($tags,$photo_tags))){
+                                $photos[] = [ 
+                                    "id" => $photo_query->id,
+                                    "src" => "/photo_resource/{$user->name}/{$photo_query->name}"
+                                ];
+                            }
+                        }//else of if(empty($tags)){
                     }//if(is_file($image_path)){
                 }//if(file_exists($image_path)){
                 //else $photo_query->delete();

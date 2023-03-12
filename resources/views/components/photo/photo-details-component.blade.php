@@ -15,7 +15,7 @@
         <div class="detail-header">TAG</div>
         <div class="detail-value">
             @forelse($tags_list as $tag)
-                <a href="#">{{$tag}}</a>
+                <a href="/?tags={{$tag}}">{{$tag}}</a>
                 @if(!$loop->last)
                 ,
                 @endif

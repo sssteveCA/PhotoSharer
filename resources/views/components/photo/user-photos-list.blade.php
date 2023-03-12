@@ -21,7 +21,7 @@
             </td>
             <td>
                 @forelse($photo['tags_list'] as $tag)
-                    {{$tag}}
+                    <a href="/?tags={{$tag}}">{{$tag}}</a>
                     @if(!$loop->last)
                     ,
                     @endif
