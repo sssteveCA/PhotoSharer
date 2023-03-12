@@ -1,5 +1,10 @@
 @extends('layouts.page')
 
+@section('links')
+    @parent
+    <link rel="stylesheet" href="{{ asset('css/dashboard/user.css') }}">
+@endsection
+
 @section('content')
     {{-- @php
         echo '<pre>';

@@ -10,7 +10,7 @@
     <tbody>
         @foreach($photos as $photo)
         <tr>
-            <td>
+            <td class="td-image">
                 <img src="{{ '/photo_resource/'.$username.'/'.$photo['name'] }}" alt="{{$photo['name']}}" title="{{$photo['name']}}">
             </td>
             <td>

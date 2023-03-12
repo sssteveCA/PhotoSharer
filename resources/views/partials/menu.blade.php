@@ -6,6 +6,9 @@
         </button>
         <div class="collapse navbar-collapse px-md-5" id="main_menu">
             <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
                 @if (Route::has('login'))
                     @auth
                         <li class="nav-item">
