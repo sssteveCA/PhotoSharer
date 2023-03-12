@@ -13,9 +13,14 @@
             position: absolute;
             width: 90%;
             height: 90%;
+            transition: width 2s, height 2s;
+                &:hover{
+                    width: 105%;
+                    height: 105%;
+                    z-index: 11;
+                }
             }  
         }
-        
     }
 }
 
