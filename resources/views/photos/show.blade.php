@@ -16,8 +16,10 @@
             <div class="photo-div col-12 col-md-9">
                 <img src="{{$data['src']}}" alt="" title="">
             </div>
-            <x-components.photo.photo-details-component :author="$data['author']" classes="photo-details-div col-12 col-md-3" :comments="$data['comments']" :photo="$data['photo']"/>
+            <x-components.photo.photo-details-component :author="$data['author']" classes="photo-details-div col-12 col-md-3" :photo="$data['photo']"/>
         </div>
-        <div class="row"></div>
+        <div class="row">
+            <x-components.photo.comments-list-component :comments="$data['comments']"/>
+        </div>
     </div>
 @endsection

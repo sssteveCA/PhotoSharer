@@ -85,6 +85,13 @@ class PhotoController extends Controller
                     $comments = Comment::where('photo_id',$id)
                         ->orderBy('creation_date')
                         ->get()->toArray();
+                    foreach($comments as $n => $comment){
+                        $comment_author = User::where('id',$comment['author_id'])->first();
+                        if($comment_author != null){
+                            $comments[$n]['author_name'] = $comment_author->name;
+                        }  
+                    }
+                    Log::debug("PhotoController show => ".var_export($comments,true)."\r\n");
                     return view('photos.show',[
                             C::KEY_DONE => true,
                             C::KEY_DATA => [
@@ -99,6 +106,7 @@ class PhotoController extends Controller
             }//if($photo != null){
             throw new ResourceNotFoundException;
         }catch(Exception $e){
+            Log::error("PhotoController show Exception => ".$e->getMessage());
             session()->put('redirect','1');
             return redirect()->route('fallback');
         }
